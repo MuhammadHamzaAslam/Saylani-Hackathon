@@ -1,0 +1,133 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap');
+
+body {
+    background-color: #F5F8FA;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+}
+*{
+    font-family: "Poppins",serif;
+}
+.container {
+    background: #fff;
+    width: 450px;
+    height: 550px;
+    border-radius: 20px;
+    box-shadow: 0 10px rgb(110, 110, 110, .2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    border: 1px solid #AAB8C2;
+}
+
+.box,
+.box button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.box {
+    width: 300px;
+    height: 240px;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.box button {
+    width: 300px;
+    height: 40px;
+    background-color: #fff;
+    outline: none;
+    font-weight: bold;
+    border: 1px solid rgb(211, 210, 210);
+    border-radius: 20px;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    transition: 0.9s ease-in-out;
+}
+#forgot:hover {
+    background-color: #121212;
+    color: #fff;
+}
+
+.box-one button img {
+    margin: 0 .5rem;
+}
+
+.box-one i {
+    color: #00acee;
+    font-size: 1.8rem;
+}
+
+.box-two input {
+    position: relative;
+    width: 300px;
+    height: 45px;
+    outline: none;
+    margin-bottom: 10px;
+    border: 1px solid rgb(211, 210, 210);
+    border-radius: 4px;
+    padding-left: 10px;
+}
+
+.box-two input label {
+    position: absolute;
+    top: 0;
+}
+
+.box-two input::placeholder {
+    font-size: 1rem;
+}
+
+.box-two input:focus {
+    border: 1px solid #00acee;
+}
+
+.box-two .next-btn {
+    background-color: #121212;
+    color: #fff;
+    transition: 0.9s ease-in-out;
+}
+.box-two .next-btn:hover {
+    background-color: #fff;
+    color: #121212;
+}
+
+.container p {
+    font-size: .7rem;
+    color: rgb(138, 136, 136);
+}
+
+.container p a {
+    text-decoration: none;
+    color: #00acee;
+}
+
+@media screen and (max-width: 460px) {
+    .container {
+        width: 350px;
+        height: auto;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .container {
+        width: 98%;
+    }
+
+    .box,
+    .box button {
+        width: 100%;
+    }
+    .box input {
+        width: 90%;
+    }
+}
