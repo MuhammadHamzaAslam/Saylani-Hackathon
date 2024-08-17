@@ -33,3 +33,12 @@ async function displayUserData(uid) {
         console.error('Error retrieving user data:', error);
     }
 }
+let createAcc = document.getElementById('createAcc')
+let SignOutBtn = document.getElementById('SignOutBtn')
+
+createAcc.addEventListener('click',()=>{
+  window.location.href = '../../Login Form/login.html'
+})
+SignOutBtn.addEventListener('click',()=>{
+  window.location.href = '../../Login Form/login.html'
+})

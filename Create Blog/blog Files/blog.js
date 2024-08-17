@@ -1,7 +1,7 @@
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-storage.js";
 import { collection, addDoc , getDocs } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 import { db } from "../../Firebase/firebase.mjs";
-
+let postSection = document.getElementById('postSection') 
 const querySnapshot = await getDocs(collection(db, "blogs"));
 querySnapshot.forEach((doc) => {
 //   console.log(`${doc.id} => ${doc.data()}`);

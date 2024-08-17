@@ -1,7 +1,7 @@
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-storage.js";
 import { collection, addDoc , getDocs } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 import { db } from "../../Firebase/firebase.mjs";
-import { app ,auth ,analytics ,db } from "../../Firebase/firebase.mjs";
+import { app ,auth ,analytics  } from "../../Firebase/firebase.mjs";
 import { onAuthStateChanged ,signOut } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 let submitBtn = document.getElementById('submitBtn');
 submitBtn.addEventListener('click', async () => {
@@ -24,17 +24,14 @@ submitBtn.addEventListener('click', async () => {
           (snapshot) => {
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             console.log('Upload is ' + progress + '% done');
-            switch (snapshot.state) {
-              case 'paused':
-                console.log('Upload is paused');
-                break;
-              case 'running':
-                console.log('Upload is running');
-                break;
-            }
           }, 
           (error) => {
             console.error('Upload failed:', error);
+            Swal.fire({
+              icon: "error",
+              title: "Upload Failed",
+              text: `Error: ${error.message}`,
+            });
           }, 
           async () => {
             const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
@@ -47,13 +44,26 @@ submitBtn.addEventListener('click', async () => {
                   imgUrl: downloadURL
                 });
                 console.log("Document written with ID: ", docRef.id);
+                Swal.fire({
+                    icon: "success",
+                    title: "Success",
+                    text: "Blog added successfully!",
+                }).then(()=>{
+                    window.location.href = '../../Dashboard/dashboard.html'
+                });
             } catch (e) {
                 console.error("Error adding document: ", e);
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: `Error adding blog: ${e.message}`,
+                });
             }
           }
         );
     }
 });
+
 let addBlogBtn = document.getElementById('addBlogBtn')
 let SignOutBtn = document.getElementById('SignOutBtn')
 addBlogBtn.addEventListener('click',()=>{
