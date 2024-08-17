@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="blog Files/blog.css">
+    <link rel="stylesheet" href="../Dashboard/Dashboard Files/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <section id="mainSection">
+        <h2>Create Your Blog</h2>
+        <div class="input-group">
+            <label for="blogName">Blog Name</label>
+            <input type="text" id="blogName" placeholder="Enter Your Blog Name">
+        </div>
+        <div class="input-group">
+            <label for="blogDescription">Blog Description</label>
+            <textarea id="blogDescription" placeholder="Enter Your Blog Description"></textarea>
+        </div>
+        <div class="input-group">
+            <label for="blogPic">Upload Blog Picture</label>
+            <input type="file" id="blogPic">
+        </div>
+        <button type="submit" id="submitBtn">Submit</button>
+    </section>
+    
+    <script type="module" src="blog Files/addblog.js"></script>
+    <script src="blog Files/blog.js" type="module"></script>
+</body>
+</html>

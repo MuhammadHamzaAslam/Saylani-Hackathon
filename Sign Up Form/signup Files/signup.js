@@ -1,9 +1,10 @@
-import { analytics, app, auth, db, firebaseApp, storage } from "../../Firebase/firebase.mjs";
+import { analytics, app, auth, db, firebaseApp } from "../../Firebase/firebase.mjs";
 import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-import { ref, getStorage, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-storage.js";
+import { getFirestore, collection, query, where, getDocs , addDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
 let signUpBtn = document.getElementById('signUpBtn');
-signUpBtn.addEventListener('click', async () => {
+
+signUpBtn.addEventListener('click', async (e) => {
     const firstName = document.getElementById('firstName').value.trim();
     const lastName = document.getElementById('lastName').value.trim();
     const userName = document.getElementById('userName').value.trim();
@@ -11,89 +12,104 @@ signUpBtn.addEventListener('click', async () => {
     const emailAddress = document.getElementById('createEmail').value.trim();
     const password = document.getElementById('createPassword').value;
     const phoneNumber = document.getElementById('phoneNumber').value.trim();
-    const file = document.getElementById('file').files[0];
+    e.preventDefault();
 
-    try {
-        const userCredential = await createUserWithEmailAndPassword(auth, emailAddress, password);
-        const user = userCredential.user;
+    createUserWithEmailAndPassword(auth, emailAddress, password)
+        .then(async (userCredential) => {
+            const user = userCredential.user;
+            const uid = user.uid;
+            console.log('uid', uid);
 
-        await addDoc(collection(db, "usersData"), {
-            uid: user.uid,
-            fName: firstName,
-            lName: lastName,
-            userEmail: emailAddress,
-            phoneNumber: phoneNumber,
-            genderSelect: gender,
-            userName: userName,
-            password: password
-        });
-        file.addEventListener('click',()=>{
-            const storageRef = ref(storage, `images/ ${file.files[0].name}`);
-            const uploadTask = uploadBytesResumable(storageRef, file.files[0]);
-            uploadTask.on('state_changed',
-                (snapshot) => {
-                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    console.log('Upload is ' + progress + '% done');
-                    switch (snapshot.state) {
-                        case 'paused':
-                            console.log('Upload is paused');
-                            break;
-                        case 'running':
-                            console.log('Upload is running');
-                            break;
-                    }
-                },
-                (error) => {
-    
-                },
-                () => {
-                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                        console.log('File available at', downloadURL);
-                    });
-                }
-            );
+            try {
+                await addDoc(collection(db, "usersData"), {
+                    uid: uid,
+                    fName: firstName,
+                    lName: lastName,
+                    userEmail: emailAddress,
+                    phoneNumber: phoneNumber,
+                    genderSelect: gender,
+                    userName: userName,
+                    password: password
+                });
+                Swal.fire({
+                    title: "Good job!",
+                    text: "You Signed up Our Page",
+                    icon: "success",
+                    footer: `<p>Your Information Has Saved</p>`
+                }).then(() => {
+                    window.location.href = '../../Dashboard/dashboard.html';
+                });
+
+            } catch (e) {
+                console.error("Error adding document: ", e);
+            }
+
         })
-
-
-        Swal.fire({
-            title: "Good job!",
-            text: "You Signed up to Our Page",
-            icon: "success",
-            footer: `<p>Your Information Has Been Saved</p>`
-        }).then(() => {
-            window.location.href = '../../Dashboard/dashboard.html';
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            if (error.code === 'auth/email-already-in-use') {
+                Swal.fire({
+                    title: "Error!",
+                    text: "This email is already in use. Please use a different email.",
+                    icon: "error",
+                }).then(() => {
+                    location.reload()
+                });
+            } else if (error.code === 'auth/invalid-email') {
+                Swal.fire({
+                    title: "Error!",
+                    text: "Invalid email format. Please enter a valid email address.",
+                    icon: "error",
+                }).then(() => {
+                    location.reload()
+                });
+            } else if (error.code === 'auth/weak-password') {
+                Swal.fire({
+                    title: "Error!",
+                    text: "Weak password. Please enter a stronger password.",
+                    icon: "error",
+                }).then(() => {
+                    location.reload()
+                });
+            }
         });
-        document.getElementById('firstName').value = '';
-        document.getElementById('lastName').value = '';
-        document.getElementById('userName').value = '';
-        document.getElementById('gender').value = '';
-        document.getElementById('createEmail').value = '';
-        document.getElementById('createPassword').value = '';
-        document.getElementById('phoneNumber').value = '';
-        document.getElementById('file').value = '';
+});
+const querySnapshot = await getDocs(collection(db, "usersData"));
+querySnapshot.forEach((doc) => {
+    console.log(`${doc.id} => ${doc.data()}`);
+});
+async function displayUserData(uid) {
+    try {
+        const q = query(collection(db, "usersData"), where("uid", "==", uid));
+        const querySnapshot = await getDocs(q);
 
-    } catch (error) {
-        console.error("Error adding document: ", error);
-
-        let errorMessage;
-
-        if (error.code === 'auth/email-already-in-use') {
-            errorMessage = "This email is already in use. Please use a different email.";
-        } else if (error.code === 'auth/invalid-email') {
-            errorMessage = "Invalid email format. Please enter a valid email address.";
-        } else if (error.code === 'auth/weak-password') {
-            errorMessage = "Weak password. Please enter a stronger password.";
-        } else {
-            errorMessage = error.message;
+        if (querySnapshot.empty) {
+            console.error('No matching documents.');
+            return;
         }
 
-        Swal.fire({
-            title: "Error!",
-            text: errorMessage,
-            icon: "error",
-        }).then(() => {
-            location.reload();
+        querySnapshot.forEach((doc) => {
+            const userData = doc.data();
+            console.log('User Data:', userData);  
+
+            document.getElementById('spanOfFirstName').innerText = userData.fName || 'N/A';
+            document.getElementById('spanOfLastName').innerText = userData.lName || 'N/A';
+            document.getElementById('spanOfEmail').innerText = userData.userEmail || 'N/A';
+            document.getElementById('spanOfPhoneNumber').innerText = userData.phoneNumber || 'N/A';
+            document.getElementById('spanOfGender').innerText = userData.genderSelect || 'N/A';
+            document.getElementById('spanOfUserName').innerText = userData.userName || 'N/A';
+            document.getElementById('spanOfPassword').innerText = userData.password || 'N/A';
         });
+    } catch (error) {
+        console.error('Error retrieving user data:', error);
+    }
+}
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        const uid = user.uid;
+        displayUserData(uid);  // Ensure this function is being called here
+    } else {
+        // window.location.href = '../../Login Form/login.html';
     }
 });
-
