@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Signup Form </title>
+        <link rel="stylesheet" href="Files/style.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+                        
+    </head>
+    <body>
+        <section class="container forms">
+            <div class="form login">
+                <div class="form-content">
+                    <header>Login</header>
+                    <form action="#">
+                        <div class="field input-field">
+                            <input type="email" placeholder="Email" id="loginEmail" class="input">
+                        </div>
+
+                        <div class="field input-field">
+                            <input type="password" placeholder="Password" id="loginPassword" class="password">
+                            <i class='bx bx-hide eye-icon'></i>
+                        </div>
+
+                        <div class="form-link">
+                            <a href="#" class="forgot-pass">Forgot password?</a>
+                        </div>
+
+                        <div class="field button-field">
+                            <button id="loginBtn">Login</button>
+                        </div>
+                    </form>
+
+                    <div class="form-link">
+                        <span>Don't have an account? <a href="#" class="link signup-link">Signup</a></span>
+                    </div>
+                </div>
+
+                <div class="line"></div>
+
+                <div class="media-options">
+                    <a href="#" class="field facebook">
+                        <i class='bx bxl-facebook facebook-icon'></i>
+                        <span>Login with Facebook</span>
+                    </a>
+                </div>
+
+                <div class="media-options">
+                    <a href="#" class="field google">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAcFJREFUSEvV1UuoT1EUBvDfHXiFDExNJEVEDLwiQ24yFMoAI0OUMpABSQqZGl0Tr+7g3iRGSmFgpAghJSZIEQnldZbOrd129v+/u3WLXadTZ317fWt9e+3vDJjgNTDB+f0TBMuxASuxhj9FPcZTXMVoLxV6dTAZJ7C3j4y3sQWvu3AlgoUYbp5FlWcUhRysJZiK+5jfseEJvmMeAhfrInbgZy3BaexLwN9wDGfxtv0+qUl4GNHpVvwodZpLtB43E/AnLMPzSqn+guUEF7A9Qe3G0HiTx76c4C5WtAk/YlaWfFozrtf7EB7FjTFMTvAOs9tgjN+6LNkMhGy91gGcLBG8wpw2eAdrx0EQA3KmRHAFm9vgF0zHr4SkS6LoeHGC2dZM1+USQeh3KAHvwrk+kpzC/gQzFy9KBBF8lFyiD1iKlwWSJYizmtnGH2bddLppXPnjScL3TUU7EfKNrfCpPTiSTVqM+KW0mC4vilt6r8OHguhZMyExSWEVU7KurmFT3mnJ7BY00ow01cS7Zt3CID7XEgQuZAip0gPM939FeFf4Uqcf1fzRwos2YjVWtbf/QfuzOY83vVqsIaiRqIj5/wl+A2MwRxkhHnjuAAAAAElFTkSuQmCC"/>
+                        <span>Login with Google</span>
+                    </a>
+                </div>
+
+            </div>
+            
+            <!-- Signup Form -->
+            
+            <div class="form signup">
+                <div class="form-content">
+                    <header>Signup</header>
+                    <form action="#">
+                        <div class="field input-field">
+                            <input type="text" placeholder="Username" id="userName" class="input">
+                        </div>
+                        <div class="field input-field">
+                            <input type="email" placeholder="Email" id="createEmail" class="input">
+                        </div>
+                        
+                        <div class="field input-field">
+                            <input type="password" placeholder="Confirm password" id="createPassword" class="password">
+                            <i class='bx bx-hide eye-icon'></i>
+                        </div>
+                        
+                        <div class="field button-field">
+                            <button id="signUpBtn">Signup</button>
+                        </div>
+                    </form>
+                    
+                    <div class="form-link">
+                        <span>Already have an account? <a href="#" class="link login-link">Login</a></span>
+                    </div>
+                </div>
+                
+                <div class="line"></div>
+                
+                <div class="media-options">
+                    <a href="#" class="field facebook">
+                        <i class='bx bxl-facebook facebook-icon'></i>
+                        <span>Login with Facebook</span>
+                    </a>
+                </div>
+                
+                <div class="media-options">
+                    <a href="#" class="field google">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAcFJREFUSEvV1UuoT1EUBvDfHXiFDExNJEVEDLwiQ24yFMoAI0OUMpABSQqZGl0Tr+7g3iRGSmFgpAghJSZIEQnldZbOrd129v+/u3WLXadTZ317fWt9e+3vDJjgNTDB+f0TBMuxASuxhj9FPcZTXMVoLxV6dTAZJ7C3j4y3sQWvu3AlgoUYbp5FlWcUhRysJZiK+5jfseEJvmMeAhfrInbgZy3BaexLwN9wDGfxtv0+qUl4GNHpVvwodZpLtB43E/AnLMPzSqn+guUEF7A9Qe3G0HiTx76c4C5WtAk/YlaWfFozrtf7EB7FjTFMTvAOs9tgjN+6LNkMhGy91gGcLBG8wpw2eAdrx0EQA3KmRHAFm9vgF0zHr4SkS6LoeHGC2dZM1+USQeh3KAHvwrk+kpzC/gQzFy9KBBF8lFyiD1iKlwWSJYizmtnGH2bddLppXPnjScL3TUU7EfKNrfCpPTiSTVqM+KW0mC4vilt6r8OHguhZMyExSWEVU7KurmFT3mnJ7BY00ow01cS7Zt3CID7XEgQuZAip0gPM939FeFf4Uqcf1fzRwos2YjVWtbf/QfuzOY83vVqsIaiRqIj5/wl+A2MwRxkhHnjuAAAAAElFTkSuQmCC"/>
+                        <span>Login with Google</span>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- JavaScript -->
+        <script src="Files/app.js" type="module"></script>
+    </body>
+</html>
