@@ -41,7 +41,8 @@ submitBtn.addEventListener('click', async () => {
                 const docRef = await addDoc(collection(db, "blogs"), {
                   blogName: blogName,
                   blogDescription: blogDescription,
-                  imgUrl: downloadURL
+                  imgUrl: downloadURL,
+                  uid: auth.currentUser.uid 
                 });
                 console.log("Document written with ID: ", docRef.id);
                 Swal.fire({

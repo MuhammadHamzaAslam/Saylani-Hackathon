@@ -8,6 +8,7 @@ const loginBtn = document.getElementById('loginBtno');
 const addBlogBtn = document.getElementById('addblog');
 const signOutBtn = document.getElementById('signOut');
 const postSection = document.getElementById('postSection');
+const yourProfile = document.getElementById('yourProfile');
 onAuthStateChanged(auth, (user) => {
   if (user) {
     // User is signed in
@@ -23,12 +24,14 @@ onAuthStateChanged(auth, (user) => {
     });
     loginBtn.style.display = 'none'; 
     addBlogBtn.style.display = 'block'; 
+    yourProfile.style.display = 'block'; 
     signOutBtn.style.display = 'block'; 
   } else {
     // User is signed out
     userNameElem.textContent = '';
     loginBtn.style.display = 'block'; 
     addBlogBtn.style.display = 'none'; 
+    yourProfile.style.display = 'none'; 
     signOutBtn.style.display = 'none'; 
   }
 });
@@ -42,17 +45,17 @@ signOutBtn.addEventListener('click', () => {
     console.error("Sign out error: ", error);
   });
 });
-async function loadBlogPosts() {
+
   const querySnapshot = await getDocs(collection(db, "blogs"));
   for (const doc of querySnapshot.docs) {
     const postData = doc.data();
-    let userName = "Unknown"; // declare the variable here
+    let userName = "Unknown";
     const userDocSnapshot = await getDocs(collection(db, "usersData"));
     userDocSnapshot.forEach((userDoc) => {
-      if (userDoc.data().uid === postData.uid) {
-        userName = userDoc.data().userName; // update the variable here
+      if (userDoc.data().uid == postData.uid) {
+        userName = userDoc.data().userName; 
       }
-    });
+  });
 
     postSection.innerHTML += `
       <div id="postDiv" class="p-2">
@@ -72,6 +75,4 @@ async function loadBlogPosts() {
       </div>
     `;
   }
-}
-
-loadBlogPosts();
+  
